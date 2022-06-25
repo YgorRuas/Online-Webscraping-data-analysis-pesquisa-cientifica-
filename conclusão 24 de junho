@@ -1,0 +1,67 @@
+WEB SCRAPING COM BEAUTIFUL SOUP
+CÓDIGO PARA EXTRAIR DADOS HTMLS DE ARTIGOS PUBLICADOS PELA REVISTA BRASILEIRA DE ENSINO DE FÍSICA HOSPEDADOS NO SITE SCIELO
+pip install beautifulsoup4 # Instala o analisador de HTML BeautifulSoup
+Requirement already satisfied: beautifulsoup4 in c:\venv\ilumpy\lib\site-packages (4.11.1)
+Requirement already satisfied: soupsieve>1.2 in c:\venv\ilumpy\lib\site-packages (from beautifulsoup4) (2.3.2.post1)
+Note: you may need to restart the kernel to use updated packages.
+WARNING: You are using pip version 21.2.4; however, version 22.1.2 is available.
+You should consider upgrading via the 'c:\venv\ilumpy\Scripts\python.exe -m pip install --upgrade pip' command.
+from bs4 import BeautifulSoup # Importa a biblioteca BeautifulSoup
+import requests # Importa a biblioteca requests
+html = requests.get("https://www.scielo.br/j/rbef/grid").content # Os método .get e .content retornam o valor do item com a chave especificada
+soup = BeautifulSoup(html, 'html.parser') # Cria um objeto chamado soup que está interpretando o objeto html 
+print(soup.prettify())
+href_tags = soup.find_all(href=True) # Encontra todas as classes de html
+hrefs = [tag.get('href') for tag in href_tags] # Inclui os elementos encontrados numa lista
+print(hrefs) # Printa os htmls que foram encontrados
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+C:\Users\RAPHAE~1\AppData\Local\Temp/ipykernel_26104/1141205682.py in <module>
+----> 1 href_tags = soup.find_all(href=True) # Encontrar todas as classes de html
+      2 hrefs = [tag.get('href') for tag in href_tags] # Incluir os elementos encontrados numa lista
+      3 print(hrefs) # Printar os htmls que foram encontrados
+
+NameError: name 'soup' is not defined
+print(list(filter(lambda x: x in "/j/rbef/i/20", hrefs))) # Usa a função lambda e o método filter para filtrar os elementos necessários
+['', '/', '/', '/j/rbef/', '/j/rbef/', '/j/rbef/', '', '', '', '', '', '', '', '', '', '', '/', '/j/rbef/', '/j/rbef/', '']
+lista = [] # Cria uma lista vazia
+for i in hrefs: # Percorre todos os itens da lista hrefs
+     if '/j/rbef/i/20' in i: # Condição caso encontre os elementos com /j/rbef/i/20 na lista
+        lista.append(i) # Método append adiciona cada item identificado em hrefs na lista vazia
+print(lista)
+['/j/rbef/i/2022.v44/?goto=previous', '/j/rbef/i/2022.v44/', '/j/rbef/i/2022.v44/?goto=previous', '/j/rbef/i/2022.v44/', '/j/rbef/i/2022.v44/', '/j/rbef/i/2021.v43/', '/j/rbef/i/2021.v43suppl1/', '/j/rbef/i/2020.v42/', '/j/rbef/i/2019.v41n1/', '/j/rbef/i/2019.v41n2/', '/j/rbef/i/2019.v41n3/', '/j/rbef/i/2019.v41n4/', '/j/rbef/i/2019.v41suppl1/', '/j/rbef/i/2018.v40n1/', '/j/rbef/i/2018.v40n2/', '/j/rbef/i/2018.v40n3/', '/j/rbef/i/2018.v40n4/', '/j/rbef/i/2017.v39n1/', '/j/rbef/i/2017.v39n2/', '/j/rbef/i/2017.v39n3/', '/j/rbef/i/2017.v39n4/', '/j/rbef/i/2016.v38n1/', '/j/rbef/i/2016.v38n2/', '/j/rbef/i/2016.v38n3/', '/j/rbef/i/2016.v38n4/', '/j/rbef/i/2015.v37n1/', '/j/rbef/i/2015.v37n2/', '/j/rbef/i/2015.v37n3/', '/j/rbef/i/2015.v37n4/', '/j/rbef/i/2014.v36n1/', '/j/rbef/i/2014.v36n2/', '/j/rbef/i/2014.v36n3/', '/j/rbef/i/2014.v36n4/', '/j/rbef/i/2013.v35n1/', '/j/rbef/i/2013.v35n2/', '/j/rbef/i/2013.v35n3/', '/j/rbef/i/2013.v35n4/', '/j/rbef/i/2012.v34n1/', '/j/rbef/i/2012.v34n2/', '/j/rbef/i/2012.v34n3/', '/j/rbef/i/2012.v34n4/', '/j/rbef/i/2011.v33n1/', '/j/rbef/i/2011.v33n2/', '/j/rbef/i/2011.v33n3/', '/j/rbef/i/2011.v33n4/', '/j/rbef/i/2010.v32n1/', '/j/rbef/i/2010.v32n2/', '/j/rbef/i/2010.v32n3/', '/j/rbef/i/2010.v32n4/', '/j/rbef/i/2009.v31n1/', '/j/rbef/i/2009.v31n2/', '/j/rbef/i/2009.v31n3/', '/j/rbef/i/2009.v31n4/', '/j/rbef/i/2008.v30n1/', '/j/rbef/i/2008.v30n2/', '/j/rbef/i/2008.v30n3/', '/j/rbef/i/2008.v30n4/', '/j/rbef/i/2007.v29n1/', '/j/rbef/i/2007.v29n2/', '/j/rbef/i/2007.v29n3/', '/j/rbef/i/2007.v29n4/', '/j/rbef/i/2006.v28n1/', '/j/rbef/i/2006.v28n2/', '/j/rbef/i/2006.v28n3/', '/j/rbef/i/2006.v28n4/', '/j/rbef/i/2005.v27n1/', '/j/rbef/i/2005.v27n2/', '/j/rbef/i/2005.v27n3/', '/j/rbef/i/2005.v27n4/', '/j/rbef/i/2004.v26n1/', '/j/rbef/i/2004.v26n2/', '/j/rbef/i/2004.v26n3/', '/j/rbef/i/2004.v26n4/', '/j/rbef/i/2003.v25n1/', '/j/rbef/i/2003.v25n2/', '/j/rbef/i/2003.v25n3/', '/j/rbef/i/2003.v25n4/', '/j/rbef/i/2002.v24n1/', '/j/rbef/i/2002.v24n2/', '/j/rbef/i/2002.v24n3/', '/j/rbef/i/2002.v24n4/', '/j/rbef/i/2001.v23n1/', '/j/rbef/i/2001.v23n2/', '/j/rbef/i/2001.v23n3/', '/j/rbef/i/2001.v23n4/', '/j/rbef/i/2022.v44/', '/j/rbef/i/2022.v44/?goto=previous', '/j/rbef/i/2022.v44/']
+# Converte a lista em conjunto para remover itens repetidos, porém não foi removido o '/j/rbef/i/2022.v44/?goto=previous' (item repetido de outro link)
+conjunto = set(lista)
+print (conjunto)
+listaconvertida = list(conjunto) # Converte o conjunto anterior em lista para usar funções aplicáveis à listas
+print(listaconvertida)
+['/j/rbef/i/2019.v41n1/', '/j/rbef/i/2015.v37n4/', '/j/rbef/i/2008.v30n1/', '/j/rbef/i/2006.v28n3/', '/j/rbef/i/2010.v32n4/', '/j/rbef/i/2019.v41n4/', '/j/rbef/i/2007.v29n3/', '/j/rbef/i/2012.v34n3/', '/j/rbef/i/2014.v36n2/', '/j/rbef/i/2011.v33n4/', '/j/rbef/i/2006.v28n2/', '/j/rbef/i/2014.v36n1/', '/j/rbef/i/2011.v33n1/', '/j/rbef/i/2002.v24n2/', '/j/rbef/i/2003.v25n2/', '/j/rbef/i/2011.v33n2/', '/j/rbef/i/2017.v39n4/', '/j/rbef/i/2003.v25n3/', '/j/rbef/i/2017.v39n2/', '/j/rbef/i/2012.v34n4/', '/j/rbef/i/2008.v30n4/', '/j/rbef/i/2014.v36n4/', '/j/rbef/i/2011.v33n3/', '/j/rbef/i/2009.v31n2/', '/j/rbef/i/2005.v27n1/', '/j/rbef/i/2013.v35n1/', '/j/rbef/i/2021.v43suppl1/', '/j/rbef/i/2019.v41n2/', '/j/rbef/i/2017.v39n1/', '/j/rbef/i/2004.v26n2/', '/j/rbef/i/2005.v27n2/', '/j/rbef/i/2016.v38n3/', '/j/rbef/i/2017.v39n3/', '/j/rbef/i/2022.v44/?goto=previous', '/j/rbef/i/2004.v26n3/', '/j/rbef/i/2015.v37n2/', '/j/rbef/i/2016.v38n1/', '/j/rbef/i/2004.v26n1/', '/j/rbef/i/2022.v44/', '/j/rbef/i/2007.v29n4/', '/j/rbef/i/2001.v23n1/', '/j/rbef/i/2016.v38n2/', '/j/rbef/i/2014.v36n3/', '/j/rbef/i/2013.v35n3/', '/j/rbef/i/2021.v43/', '/j/rbef/i/2007.v29n1/', '/j/rbef/i/2019.v41n3/', '/j/rbef/i/2009.v31n1/', '/j/rbef/i/2001.v23n2/', '/j/rbef/i/2010.v32n2/', '/j/rbef/i/2001.v23n3/', '/j/rbef/i/2015.v37n1/', '/j/rbef/i/2019.v41suppl1/', '/j/rbef/i/2013.v35n2/', '/j/rbef/i/2007.v29n2/', '/j/rbef/i/2001.v23n4/', '/j/rbef/i/2015.v37n3/', '/j/rbef/i/2012.v34n1/', '/j/rbef/i/2018.v40n3/', '/j/rbef/i/2003.v25n4/', '/j/rbef/i/2018.v40n4/', '/j/rbef/i/2013.v35n4/', '/j/rbef/i/2005.v27n3/', '/j/rbef/i/2002.v24n4/', '/j/rbef/i/2008.v30n3/', '/j/rbef/i/2002.v24n3/', '/j/rbef/i/2009.v31n3/', '/j/rbef/i/2006.v28n4/', '/j/rbef/i/2018.v40n1/', '/j/rbef/i/2020.v42/', '/j/rbef/i/2016.v38n4/', '/j/rbef/i/2009.v31n4/', '/j/rbef/i/2005.v27n4/', '/j/rbef/i/2006.v28n1/', '/j/rbef/i/2010.v32n1/', '/j/rbef/i/2003.v25n1/', '/j/rbef/i/2008.v30n2/', '/j/rbef/i/2018.v40n2/', '/j/rbef/i/2010.v32n3/', '/j/rbef/i/2002.v24n1/', '/j/rbef/i/2004.v26n4/', '/j/rbef/i/2012.v34n2/']
+sequencia = "/j/rbef/i/2022.v44/?goto=previous" # seleciona elementos da lista para remover
+listaconvertida_rem = listaconvertida.remove(sequencia) # O método remove recebe um argumento e retira ele da lista
+print(listaconvertida)
+['/j/rbef/i/2019.v41n1/', '/j/rbef/i/2015.v37n4/', '/j/rbef/i/2008.v30n1/', '/j/rbef/i/2006.v28n3/', '/j/rbef/i/2010.v32n4/', '/j/rbef/i/2019.v41n4/', '/j/rbef/i/2007.v29n3/', '/j/rbef/i/2012.v34n3/', '/j/rbef/i/2014.v36n2/', '/j/rbef/i/2011.v33n4/', '/j/rbef/i/2006.v28n2/', '/j/rbef/i/2014.v36n1/', '/j/rbef/i/2011.v33n1/', '/j/rbef/i/2002.v24n2/', '/j/rbef/i/2003.v25n2/', '/j/rbef/i/2011.v33n2/', '/j/rbef/i/2017.v39n4/', '/j/rbef/i/2003.v25n3/', '/j/rbef/i/2017.v39n2/', '/j/rbef/i/2012.v34n4/', '/j/rbef/i/2008.v30n4/', '/j/rbef/i/2014.v36n4/', '/j/rbef/i/2011.v33n3/', '/j/rbef/i/2009.v31n2/', '/j/rbef/i/2005.v27n1/', '/j/rbef/i/2013.v35n1/', '/j/rbef/i/2021.v43suppl1/', '/j/rbef/i/2019.v41n2/', '/j/rbef/i/2017.v39n1/', '/j/rbef/i/2004.v26n2/', '/j/rbef/i/2005.v27n2/', '/j/rbef/i/2016.v38n3/', '/j/rbef/i/2017.v39n3/', '/j/rbef/i/2004.v26n3/', '/j/rbef/i/2015.v37n2/', '/j/rbef/i/2016.v38n1/', '/j/rbef/i/2004.v26n1/', '/j/rbef/i/2022.v44/', '/j/rbef/i/2007.v29n4/', '/j/rbef/i/2001.v23n1/', '/j/rbef/i/2016.v38n2/', '/j/rbef/i/2014.v36n3/', '/j/rbef/i/2013.v35n3/', '/j/rbef/i/2021.v43/', '/j/rbef/i/2007.v29n1/', '/j/rbef/i/2019.v41n3/', '/j/rbef/i/2009.v31n1/', '/j/rbef/i/2001.v23n2/', '/j/rbef/i/2010.v32n2/', '/j/rbef/i/2001.v23n3/', '/j/rbef/i/2015.v37n1/', '/j/rbef/i/2019.v41suppl1/', '/j/rbef/i/2013.v35n2/', '/j/rbef/i/2007.v29n2/', '/j/rbef/i/2001.v23n4/', '/j/rbef/i/2015.v37n3/', '/j/rbef/i/2012.v34n1/', '/j/rbef/i/2018.v40n3/', '/j/rbef/i/2003.v25n4/', '/j/rbef/i/2018.v40n4/', '/j/rbef/i/2013.v35n4/', '/j/rbef/i/2005.v27n3/', '/j/rbef/i/2002.v24n4/', '/j/rbef/i/2008.v30n3/', '/j/rbef/i/2002.v24n3/', '/j/rbef/i/2009.v31n3/', '/j/rbef/i/2006.v28n4/', '/j/rbef/i/2018.v40n1/', '/j/rbef/i/2020.v42/', '/j/rbef/i/2016.v38n4/', '/j/rbef/i/2009.v31n4/', '/j/rbef/i/2005.v27n4/', '/j/rbef/i/2006.v28n1/', '/j/rbef/i/2010.v32n1/', '/j/rbef/i/2003.v25n1/', '/j/rbef/i/2008.v30n2/', '/j/rbef/i/2018.v40n2/', '/j/rbef/i/2010.v32n3/', '/j/rbef/i/2002.v24n1/', '/j/rbef/i/2004.v26n4/', '/j/rbef/i/2012.v34n2/']
+hrefs = [] # Cria uma lista vazia
+for volume in conjunto: # Percorre cada item da lista
+    novolink = 'https://www.scielo.br' + str(volume) # Concatena o domínio do site com cada item da lista que é o caminho para cada link com os artigos 
+    print(novolink)
+    # Executa novamente o Beautiful Soup para obter os htmls dos artigos publicados
+    html = requests.get(novolink).content
+    soup = BeautifulSoup(html, 'html.parser')
+    print(soup.prettify())
+    href_tags = soup.find_all(href=True)
+    hrefs.extend([tag.get('href') for tag in href_tags]) # Coloca todos os links na lista vazia hrefs
+    for link in hrefs:
+        print(link)
+lista_link = [] # Cria uma lista vazia
+for i in hrefs: # Percorre os itens da lista hrefs
+     if '/abstract/?lang=pt' in i: # Condição caso encontre os elementos com /abstract/?lang=pt na lista, filtrando os htmls que contém apenas os artigos identificados pelo resumo
+        lista_link.append(i) # Método append adiciona cada item identificado em hrefs na lista vazia
+print (lista_link)
+ch = "/abstract"
+lista_link = [elem.replace(ch, '') for elem in lista_link] # O método replace substitui o valor da variável ch por um espaço vazio para obter o html do artigo completo
+print(lista_link)
+lista_link_comp = [] # Cria uma lista vazia
+for link in lista_link: # Percorre os itens da lista
+    novolink = 'https://www.scielo.br' + str(link) # Concatena o domínio do site com cada item da lista que é o caminho para cada artigo 
+    lista_link_comp.append(novolink) # Adiciona os links dos artigos na lista vazia
+print(lista_link_comp)
